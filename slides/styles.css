@@ -1,0 +1,43 @@
+
+:root{
+  --inverse-background-color: #FFFF;
+  --inverse-header-color: #e13d3d;
+}
+
+
+h1, h2, h3 {
+  font-weight: 600;
+}
+
+.remark-code {
+  font-size: 0.75rem;
+}
+.remark-inline-code {
+  color: #e13d3d;
+}
+.title-slide, .title-slide h1{
+  font-size: 60px;
+}
+.title-slide h2, .title-slide h3 {
+  font-size: 32px ;
+}
+.title-slide .remark-slide-number {
+  display: none;
+}
+
+
+
+.alert {
+  background-color: var(--inverse-background-color);
+  color: var(--inverse-text-color);
+
+}
+.alert h1{
+  color: var(--inverse-header-color);
+  font-size: 80px;
+}
+
+.alert h3{
+  color: var(--inverse-header-color);
+  font-size: 40px;
+}

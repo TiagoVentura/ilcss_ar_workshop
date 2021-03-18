@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introduction to R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Tiago Ventura" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+    <link rel="stylesheet" href="fontsrladies.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Introduction to R
+## iLCSS Argentina
+### Tiago Ventura
+
+---
+
+
+
+
+# Plans for Today
+
+
+1. Workflow: R and Rstudio.
+
+2. How to Interact with R.
+
+3. Packages and Asking for Help in R.
+
+4. Objects e Classes.
+
+5. Data Structure.
+
+6. Importing and Exporting Data in R.
+
+7. Functions.
+
+8. Loops.
+
+--
+
+### `Next week: Dplyr and Tidyverse`
+
+--
+
+---
+
+# What's R?
+
+R is a versatile, open source programming/scripting language that's useful both for statistics but also data science.
+
+- Open source software under **GPL**.
+
+- Superior (if not just comparable) to commercial alternatives. 
+
+- Not just for statistics, but also **general purpose** programming.
+
+- Is **object oriented** (= R has objects) and **functional** (= You can write functions).
+
+- Large and growing community of peers. 
+
+
+---
+
+## RStudio.
+
+RStudio is the premier R graphical user interface (GUI) and integrated development environment (IDE) that makes R easier to use.
+
+&lt;img src="figs/R_vs_RStudio_1.png" width="100%" /&gt;
+
+.footnote[Source: [Rochele Terman's Intro to CSS Book](https://plsc-31101.github.io/course/r-basics.html)]
+
+
+---
+## Understanding the R Studio
+
+&lt;img src="figs/rstudio.png" width="100%" /&gt;
+
+
+---
+##  How to Interact with R ?
+
+`Open RStudio!`
+--
+
+### Command Line (bottom left panel).
+
+You can interact with R directly using the Command Line. The symbol `&gt;` indicates that R is ready to work! Copy and paste the command below to your command line, and click enter.
+
+
+```r
+2+2
+```
+
+```
+## [1] 4
+```
+
+--
+
+When you see the symbol `+` it means your code was not completed. Then, you shoudl press esc to move back to `&gt;`. 
+
+
+```r
+# Incomplete Code
+
+incomplete&lt;- "I am going to give you an incomplete
+```
+
+---
+
+## Using Scripts.
+
+Open a new script: `File` -&gt; `New File` -&gt; `R Script`
+
+The script is just a plain text file. But you can send command from the script to your command line directly.
+
+--
+#### `command + enter` (Mac) ou `Ctrl + enter` (PC).  
+--
+
+
+```r
+# Rode estas operação em um script. 
+# Hashtags permite você comentar seu código. 
+2^2
+2*2
+2/2
+```
+
+---
+
+### Why Should I go with scripts?
+
+- More appropriate when working with long codes. 
+
+- Show others all your steps. 
+
+- Allow your future self to return to your code. 
+
+
+---
+
+## Other Important Tips.
+
+#### Comments.
+
+Use # signs to add comments within your code chunks. Help yourself in the future and make as much comments as you can in your code!
+
+
+```r
+# Hello all!
+```
+
+
+#### Errors
+
+When the text is a legitimate error, it will be prefaced with “Error:”, and R will try to explain what went wrong.
+
+```r
+plot("hello")
+```
+
+```
+## Error in plot.window(...): need finite 'ylim' values
+```
+
+![](intro_r_ilcss_ar_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+---
+
+## R Packages. 
+
+--
+.pull-left[
+
+#### What the Packages are?
+- A set of thematic function someone put together for you. 
+
+
+- Sometimes packages also bring data
+
+
+- In the end, just a folder you donwloaded to your computer. 
+
+]
+
+--
+
+.pull-right[
+
+There are a number of `packages` that are supplied with the R distribution. These are known as ``[base packages](https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html)". 
+
+Other we need to install. 
+
+- Packages should be installed only once. 
+
+      `install.packages()`
+
+- Should be loaded every R session. 
+
+  `library()`
+
+
+]
+
+--
+
+---
+class: center, middle
+
+### Installing Packages Via Cran.
+
+
+```r
+install.packages("devtools", force=TRUE)
+```
+
+
+### Load a Package.
+
+
+```r
+library(devtools)
+```
+
+
+### Install Packages Via Github
+
+
+```r
+devtools::install_github("electorArg/polAr")
+```
+
+
+
+---
+
+## Asking for Help in  R
+
+
+```r
+# Specific to a function
+?mean  # Help para a função mean.
+help(mean)
+
+# More General
+??mean
+```
+
+.center[
+&lt;img src="figs/ajuda.png" width="70%" /&gt;
+]
+
+---
+
+## Asking for Help on Google.
+
+- **Google**: name of the function + the error message you are getting. 
+
+- Remove all the information about you and your local path
+
+- Try to understand the solution. Copy and Paste will rarely solve your problems. 
+
+
+---
+class: center, middle 
+
+## The 15 minutes rule.
+
+From  [Rochele Terman plsc-31101](https://plsc-31101.github.io/course/introduction.html).
+
+&lt;img src="intro_r_ilcss_ar_files/figure-html/unnamed-chunk-13-1.png" width="50%" /&gt;
+
+---
+class: center, middle, inverse
+
+# Objects in R
+
+---
+
+# O que são objetos ?
+
+In simple terms, an `object` is a bit of text that represents a specific value. Variable names can only contain letters, numbers, the underscore character, and (unlike Python) the period character.
+
+`Everything that exists in R is an object.`
+
+
+It is how you create things in R. 
+
+---
+
+## Creating Objects
+
+*(assignment operator)* `&lt;-`
+
+
+```r
+# Numeric Objects
+x &lt;- 5
+y &lt;- 7
+
+# Character Objects
+nome &lt;- "Tiago Ventura"
+```
+
+---
+
+## Can I use `=` to create objects?
+
+--
+
+Yes. But...
+
+--
+.center[
+![](https://media.giphy.com/media/JYZ397GsFrFtu/giphy.gif)
+]
+--
+
+### What is the value of x?
+
+
+
+```r
+x&lt;-6 
+mean(x=c(5, 7))
+```
+
+---
+class: center, middle 
+
+## Other important commands
+
+#### Checking my environment.
+
+
+```r
+ls()
+```
+
+```
+##  [1] "bakers"              "char_1_5"            "cities"              "container"           "dados"              
+##  [6] "data"                "dfake"               "i"                   "lista_1"             "m"                  
+## [11] "meu_numero_da_sorte" "nome"                "num_1_5"             "places_with_ilcss"   "ratings_seasons"    
+## [16] "some_me"             "temp"                "temporada_1"         "temporada_2"         "temporada_3"        
+## [21] "temporadas"          "x"                   "X"                   "x_list"              "x_matrix"           
+## [26] "y"
+```
+
+#### Remove Objects
+
+
+```r
+rm(y)
+```
+
+#### Visualizing Objects
+
+
+```r
+print(nome)
+```
+
+```
+## [1] "Tiago Ventura"
+```
+
+#### Changing Objects
+
+
+```r
+nome &lt;- "Tiago Augusto Ventura"
+```
+
+---
+
+## Objects Classes
+
+Every object in R has a **class**. The class describes what the object is. Main classes are:
+
+&lt;table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Example &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; Tipo &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; a  , swc &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Character &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2, 3, 15 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Numeric &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 1, 2 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Interger &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; FALSE, TRUE &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Logical &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+## Checking the Class of my Objects. 
+
+`class()`
+
+
+```r
+class(3)
+```
+
+```
+## [1] "numeric"
+```
+
+```r
+class(TRUE)
+```
+
+```
+## [1] "logical"
+```
+
+```r
+meu_numero_da_sorte= "13"
+
+class(meu_numero_da_sorte)
+```
+
+```
+## [1] "character"
+```
+
+```r
+class(meu_numero_da_sorte==13)
+```
+
+```
+## [1] "logical"
+```
+
+---
+
+## Another Way to Go: is.class?
+
+
+```r
+is.numeric(2)
+```
+
+```
+## [1] TRUE
+```
+
+```r
+is.logical(TRUE)
+```
+
+```
+## [1] TRUE
+```
+
+```r
+is.character("2")
+```
+
+```
+## [1] TRUE
+```
+
+```r
+is.integer(1L)
+```
+
+```
+## [1] TRUE
+```
+
+---
+
+## Coercing Objects.
+
+R allows you to easily change the class of your objects using the functions: `as.class()`
+
+
+```r
+# Cria Objeto
+num_1_5 &lt;- c(1, 2, 3, 4, 5)
+
+# Altera a classe
+char_1_5 &lt;- as.character(num_1_5)
+
+# Checando
+class(char_1_5)
+```
+
+```
+## [1] "character"
+```
+
+```r
+class(num_1_5)
+```
+
+```
+## [1] "numeric"
+```
+
+```r
+# Ou
+as.numeric("25")
+```
+
+```
+## [1] 25
+```
+
+
+---
+
+class: middle, center, inverse
+
+# Data Structure
+
+---
+
+##  Vector
+
+
+```r
+# Numeric Vector
+X &lt;- c(1, 2.3, 4, 5, 6.78, 6:10)
+X
+```
+
+```
+##  [1]  1.00  2.30  4.00  5.00  6.78  6.00  7.00  8.00  9.00 10.00
+```
+
+```r
+# Class
+class(X)
+```
+
+```
+## [1] "numeric"
+```
+
+```r
+# Length
+length(X)
+```
+
+```
+## [1] 10
+```
+
+---
+
+## Matrix
+
+**Main Feature:** Rectangular and Numeric.
+
+
+```r
+# Coerce to a matrix
+x_matrix &lt;- as.matrix(X)
+
+# Build a Matrix.
+m &lt;- matrix(1:10, nrow=5, ncol=2)
+m
+```
+
+```
+##      [,1] [,2]
+## [1,]    1    6
+## [2,]    2    7
+## [3,]    3    8
+## [4,]    4    9
+## [5,]    5   10
+```
+
+```r
+# Acessing a values
+m[1, 1] # [rows, columns]
+```
+
+```
+## [1] 1
+```
+
+
+---
+
+## List
+
+**Main Feature**: Flexible, huge drawer where you can put anything you want. 
+
+
+```r
+# coerce to a list
+
+x_list&lt;- as.list(X)
+
+# or
+
+lista_1 &lt;- list(X, as.matrix(X), as.character(X))
+
+# Visualize a lista.
+
+str(list)
+```
+
+```
+## function (...)
+```
+
+```r
+# Acessing a value: double [[]]
+list_1[[1]]
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'list_1' not found
+```
+
+---
+
+# Data Frame. 
+
+1. Classic Database. 
+
+2. Rectangular. 
+
+3. Works with columns with different classes.
+
+4. Like a excel spreadsheet .
+
+---
+
+
+## Creating a Data Frame. 
+
+
+```r
+# Coercing
+as.data.frame(X)
+```
+
+```
+##        X
+## 1   1.00
+## 2   2.30
+## 3   4.00
+## 4   5.00
+## 5   6.78
+## 6   6.00
+## 7   7.00
+## 8   8.00
+## 9   9.00
+## 10 10.00
+```
+
+```r
+# Criando Manualmente
+
+data &lt;- data.frame(name=c("Tiago", "Tiago"), 
+                   last_name=c("Ventura", "Ventura") ,
+                   school=c("UMD", "FGV"), age=c(30,32))
+data
+```
+
+```
+##    name last_name school age
+## 1 Tiago   Ventura    UMD  30
+## 2 Tiago   Ventura    FGV  32
+```
+
+
+---
+
+## Pre-Built Data Frames
+
+
+```r
+#devtools::install_github("apreshill/bakeoff")
+mtcars
+```
+
+```
+##                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+## Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+## Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+## Merc 240D           24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+## Merc 230            22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+## Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+## Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+## Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+## Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
+## Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+## Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+## Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+## Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+## Fiat 128            32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+## Honda Civic         30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+## Toyota Corolla      33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+## Toyota Corona       21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
+## Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+## AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
+## Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+## Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+## Fiat X1-9           27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+## Porsche 914-2       26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+## Lotus Europa        30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+## Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+## Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+## Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8
+## Volvo 142E          21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
+```
+
+---
+
+## Acessing Information from your Data Frame
+
+
+    `data[rows, columns]`
+
+
+
+**Rows**: Only using Numeric Index.
+
+
+**Columns**: Using both Numeric Index or Textual Keys.
+
+---
+
+**Using Numeric Index**
+
+
+```r
+mtcars[,1] # primeira coluna
+```
+
+```
+##  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2 10.4 10.4 14.7 32.4 30.4 33.9 21.5 15.5
+## [23] 15.2 13.3 19.2 27.3 26.0 30.4 15.8 19.7 15.0 21.4
+```
+
+---
+
+**Textual Key**
+
+
+```r
+mtcars$mpg
+```
+
+```
+##  [1] 21.0 21.0 22.8 21.4 18.7 18.1 14.3 24.4 22.8 19.2 17.8 16.4 17.3 15.2 10.4 10.4 14.7 32.4 30.4 33.9 21.5 15.5
+## [23] 15.2 13.3 19.2 27.3 26.0 30.4 15.8 19.7 15.0 21.4
+```
+
+```r
+# Ou
+
+bakers[,"mpg"]
+```
+
+```
+## Error: Can't subset columns that don't exist.
+## x Column `mpg` doesn't exist.
+```
+
+---
+
+**Row with Numeric Index**
+
+
+```r
+bakers[1:5, ]
+```
+
+```
+## # A tibble: 5 x 8
+##   series baker_full              baker       age occupation                      hometown     baker_last baker_first
+##   &lt;fct&gt;  &lt;chr&gt;                   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;                           &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;      
+## 1 1      "Annetha Mills"         Annetha      30 Midwife                         Essex        Mills      Annetha    
+## 2 1      "David Chambers"        David        31 Entrepreneur                    Milton Keyn… Chambers   David      
+## 3 1      "Edward \"Edd\" Kimber" Edd          24 Debt collector for Yorkshire B… Bradford     Kimber     Edward     
+## 4 1      "Jasminder Randhawa"    Jasminder    45 Assistant Credit Control Manag… Birmingham   Randhawa   Jasminder  
+## 5 1      "Jonathan Shepherd"     Jonathan     25 Research Analyst                St Albans    Shepherd   Jonathan
+```
+
+
+---
+
+### Useful Functions to Understand your Data Frames.
+
+
+
+```r
+head(bakers) # First lines
+
+tail(bakers) # last lines linhas
+
+summary(bakers) # classes
+
+dim(bakes) # dimensions
+
+glimpse(bakers) # summary
+```
+
+
+
+---
+
+## Exporting Data Frames.
+
+An crucial task you will perform in R relates to  exporting your results, including a new database. T
+
+There are several functions to do this, depending on the format of the output you want. Some examples:
+
+- `write.table()` for txt
+- `write.csv()` for csv
+- `write.xlsx` for xlsx
+- `save()` to export as a RData
+
+---
+
+# Exporting as a  csv.
+
+
+```r
+# make a fake data set
+
+dfake &lt;- data.frame(normal=rnorm(100, 0, 1), 
+                    uniform=runif(100, 0, 1), 
+                    pois=rpois(100, 10))
+# write.function(data, name_to_be_saved)
+write.csv(dfake, "dfake.csv")
+```
+
+---
+
+### But.. wait.. where is my data? Where R is looking at ?
+
+`R` does not intuitively know where your data is. If the data is in a special folder called "super secret search", we have to tell `R` how to get there.
+
+We do this in two ways:
+
+1. Learn where your files are.
+
+
+2. Define your **working directory** for this folder: all your outputs and inputs will be there.
+
+
+---
+
+## Paths
+
+Every time `R` is started, it looks at the same place (called _global path_), unless it is asked to go elsewhere.
+
+
+```r
+# Where is my R looking at?
+getwd()
+```
+
+```
+## [1] "/home/venturat/Dropbox/Workshops/ilcss_ar_workshop/slides"
+```
+
+
+```r
+# Where should R be looking instead?
+
+setwd("/home/venturat/Downloads")
+```
+
+
+---
+
+## Importing data 
+
+
+```r
+# Check Dir
+getwd()
+```
+
+```
+## [1] "/home/venturat/Dropbox/Workshops/ilcss_ar_workshop/slides"
+```
+
+```r
+# See what we have here.
+list.files()
+```
+
+```
+## [1] "dfake.csv"              "figs"                   "intro_r_ilcss_ar_files" "intro_r_ilcss_ar.html" 
+## [5] "intro_r_ilcss_ar.Rmd"   "libs"                   "styles.css"
+```
+
+```r
+# import
+dados &lt;- read.csv("dfake.csv")
+
+head(dados)
+```
+
+```
+##   X      normal   uniform pois
+## 1 1  0.64662729 0.6674964   17
+## 2 2  1.12711171 0.2624942    7
+## 3 3  0.34786773 0.1673247    7
+## 4 4  1.02400519 0.3265981    8
+## 5 5 -0.65239447 0.8001921   12
+## 6 6 -0.02417184 0.2408146    6
+```
+
+---
+
+## Functions
+
+**Everything that generates an output in R is a function.**
+
+
+```r
+x&lt;- c(1, 2, 3, 4, 5)
+
+# Mathematical Functions in R
+sum(x, na.rm = TRUE) 
+```
+
+```
+## [1] 15
+```
+
+```r
+log(x) 
+```
+
+```
+## [1] 0.0000000 0.6931472 1.0986123 1.3862944 1.6094379
+```
+
+```r
+sqrt(x)
+```
+
+```
+## [1] 1.000000 1.414214 1.732051 2.000000 2.236068
+```
+
+```r
+mean(x)
+```
+
+```
+## [1] 3
+```
+
+---
+
+## Inputs, outputs and arguments. 
+
+As we learned in our basic math course, a function maps a input to an output. The logic is the same in R. 
+
+Every function has the following components:
+
+- inputs: most of times an object you send in to the function. 
+
+- outputs: the results of the function. 
+
+- arguments: specify how the function works. 
+
+
+```r
+# Lets see how the mean function works
+?mean
+```
+
+---
+
+## Creating our own functions. 
+
+.pull-left[
+
+
+```r
+some_me &lt;- function( argument1, argument2 ){
+  
+  value &lt;- argument1 + argument2
+  
+  return(value) # "return" define the output 
+}
+
+some_me(2,3)
+```
+
+```
+## [1] 5
+```
+
+```r
+some_me(100,123)
+```
+
+```
+## [1] 223
+```
+
+```r
+some_me(60,3^4)
+```
+
+```
+## [1] 141
+```
+
+]
+
+
+.pull-right[
+
+Components:
+
+- **name**: some_me;
+
+- **argument**: argument1 e argument2;
+
+- **body**: everything inside of {}; 
+
+- **return**: output.
+]
+
+---
+
+#### Another More General Example 
+
+
+```r
+nome_da_funcao &lt;- function(x,y,z){ ## Argumentos
+  ### Corpo: o que a função faz
+   	
+    out &lt;- what the function does.
+  
+  ### Conclui Corpo.
+    
+  	return(out) ## output
+}
+  ## fecha a função
+```
+
+
+---
+
+## When should you write a function?
+
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+$$
+\texttt{"You should consider writing a function whenever} \\
+$$
+
+$$
+\texttt{you’ve copied and pasted a block of code more than twice"}
+$$
+
+---
+
+# Loops
+
+As one quickly notes, doing any task in R can become redundant. Loops can dramatically increase the efficiency of our workflow when a task is _systematic and repeatable_.  
+
+Let's see a toy example.
+
+
+```r
+places_with_ilcss &lt;- c("Buenos Aires",
+                       "College Park", 
+                       "Mexico City")
+
+# for loop
+
+for(cities in places_with_ilcss){ #iterador
+  # repeating
+  print(cities)
+}
+```
+
+```
+## [1] "Buenos Aires"
+## [1] "College Park"
+## [1] "Mexico City"
+```
+
+
+---
+
+## What is this doing?
+
+
+```r
+cities &lt;- places_with_ilcss[1]
+print(cities)
+```
+
+```
+## [1] "Buenos Aires"
+```
+
+
+
+```r
+cities &lt;- places_with_ilcss[2]
+print(cities)
+```
+
+```
+## [1] "College Park"
+```
+
+
+
+```r
+cities &lt;- places_with_ilcss[3]
+print(cities)
+```
+
+```
+## [1] "Mexico City"
+```
+
+---
+## Components of a for loop
+
+
+**`for(item in group_of_items)`: the sequence**
+
+  - item: index for each repetition.
+    
+  - group_of_items:  object we are drawing the item from
+  
+
+--
+
+**Parenthesis {}**
+
+  - What it is to be repeated goes here. 
+  
+  
+--
+
+**Containers**
+
+  - Created outside of the loop. 
+  
+  - Object to save all your outputs. 
+
+--
+
+---
+
+## A more realistic example. 
+
+
+```r
+##devtools::install_github("apreshill/bakeoff")
+library(bakeoff)
+data("ratings_seasons")
+```
+
+We want to calculate the average number of views per season. 
+
+
+```r
+# How many Seasons?
+temporadas &lt;- unique(ratings_seasons$series)
+temporadas
+```
+
+```
+## [1] 1 2 3 4 5 6 7 8
+```
+
+```r
+# Average Views
+
+#Temporadas
+temporada_1 &lt;- ratings_seasons[ratings_seasons$series==temporadas[1],]
+temporada_2 &lt;- ratings_seasons[ratings_seasons$series==temporadas[2], ]
+temporada_3 &lt;- ratings_seasons[ratings_seasons$series==temporadas[3], ]
+
+# Take the mean
+
+mean(temporada_1$viewers_7day)
+```
+
+```
+## [1] 2.77
+```
+
+---
+
+## Building our loop: Computationally Thinking. 
+
+
+1. Think about and specify the length of something you want to loop through. In our case, it's the number of seasons.
+
+2. Set the code up so that every iteration only performs a manipulation on a single subset at a time.
+
+3. Save the contents of each iteration in a new object that won't be overwritten. Here we want to think in terms of "stacking" results or concatenating them. 
+
+In practice... read your code, see what is repeating, and make it general. 
+
+---
+
+
+```r
+# Containes
+container &lt;- list()
+
+for(i in 1:length(temporadas)){ # Step  1
+  
+ # step 2  
+ temp=ratings_seasons[ratings_seasons$series==temporadas[i], ] 
+ 
+ # Step 3
+ container[[i]] &lt;- mean(temp$viewers_7day)  
+  
+}
+container
+```
+
+```
+## [[1]]
+## [1] 2.77
+## 
+## [[2]]
+## [1] 3.95125
+## 
+## [[3]]
+## [1] 5.001
+## 
+## [[4]]
+## [1] 7.354
+## 
+## [[5]]
+## [1] 10.0393
+## 
+## [[6]]
+## [1] 12.311
+## 
+## [[7]]
+## [1] 13.563
+## 
+## [[8]]
+## [1] 9.017
+```
+
+---
+
+## I know!!!
+
+.center[
+![](https://media.giphy.com/media/kdhxCxaEruTmDbPkAL/giphy.gif)
+]
+
+---
+class: center, middle, inverse
+
+## Next Week
+
+### Tidyverse: and you will fell better! I promise!
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
