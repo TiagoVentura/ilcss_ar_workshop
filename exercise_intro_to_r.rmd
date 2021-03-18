@@ -1,0 +1,78 @@
+---
+title: "Intro do R: iLCSS. Exercise I"
+author: "Tiago Ventura"
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+## Question 1    
+ 
+Download this dataset [mtcars](https://www.dropbox.com/s/zks9aom2ff085uw/mtcars.csv?dl=0). 
+
+Open the dataset using read.csv, and describe the class of each the datasets' columns
+
+```{r}
+#answer
+```
+
+## Questão 2.
+
+Repeat the same exercise with another dataset, but now in another formar. It can be a stata files, an excel spreadsheet, a R data, use anything other than a csv. 
+
+
+```{r}
+#answer
+```
+
+## Questão 3
+
+Build a data frame  with three variables: first name, last name, and date of birth. Add to this data frame information about you and five other friends. Then, filter this data frame to show information only about you. 
+
+```{r}
+#answer
+
+```
+
+
+## Questao 4.
+
+Write a loop using the mtcars. The should:
+
+- Calculate the mean for each column of the dataset. 
+
+- Get the standard deviation for each column. 
+
+- Get the number of unique values in each column. 
+
+Use a bit of google to solve this question. Save the output, and print the final object. 
+
+Hint I: You can use the same loop or three different loops to answer the question. 
+
+Hint II: Remember to create the container to save your outputs outside of the loop. 
+
+```{r}
+#answer
+```
+
+
+## Questão 5.
+
+Write a function to calculate the variance of numeric vector. 
+
+Here is the formula for the variance. You need to translate this to R. 
+
+$$
+Var = \sum \frac{(x_{i}-\bar{x})^2}{n}
+$$
+
+```{r}
+#answer
+```
+
+## See you next week!
+

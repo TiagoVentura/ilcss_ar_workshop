@@ -2,22 +2,16 @@
 
 This repository contains the materials for **Introduction to R** workshop I offered for the researchers at the Interdisciplinary Laboratory in Computational Social Science (iLCSS) Argentina. 
 
-## Learning Goals
+## Schedule
 
-- Introduction to R and R Studio. 
+- Workshop I: Introduction to R and Crash Course in Base R. ([Slides]() / [R Code]() / [Exercise]())
 
-- Crash Course in Base R: objects, classes, and functions. 
-
-- Introduction to Data Manipulation with dplyr. 
+- Introduction to Data Manipulation with dplyr. ([Slides]() / [R Code]() / [Exercise]())
 
 
 ## Materials
 
-The slides for the workshop are available [here]. The slides were created using the R package `xaringan`, and the source for the slides can be downloaded [here]
-
-The code reproducing the codes covered in the slides are also avaiable [here]
-
-All the materials are available in this repo. Therefore, if you are familiar with git, you can just clone this repository locally. 
+All the materials are available in this repo. If you are familiar with git, you can just clone this repository locally, and get access to everything in just one place.
 
 ## About me
 
