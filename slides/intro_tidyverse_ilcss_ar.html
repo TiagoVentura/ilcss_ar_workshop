@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introduction to Tidyverse: Data Manipulation</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Tiago Ventura" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+    <link rel="stylesheet" href="fontsrladies.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Introduction to Tidyverse: Data Manipulation
+## iLCSS Argentina
+### Tiago Ventura
+
+---
+
+
+
+
+# Plans for Today
+
+&lt;br&gt;&lt;br&gt; 
+
+1. Introduction to Tidyverse.
+
+2. Data manipulation with dplyr.
+
+3. Working with relational data with dplyr.
+
+
+---
+
+# Data Manipulation
+
+90% of our work as applied researchers consists of data wrangling and preparation.. this process involves ...
+
+
+- manipulate variables
+
+- join databases
+
+- change the format of the data
+
+- cleaning...
+
+For all these tasks, we will use the packages from `tidyverse`
+
+---
+
+# Tidyverse
+
+`Tidyverse` is a family of R packages developed in an integrated way. These packages share the same underlying design philosophy, grammar and data structures.
+
+The purpose of `tidyverse` is to provide an integrated set of tools for using R as a language in Data Science. These are the main packages of `tidyverse`:
+
+- `dplyr`: for data manipulation.
+
+- `ggplot2`: for data visualization.
+
+- `tidyr`: to prepare your data for analysis.
+
+- `purrr`: to optimize your code and for functional programming.
+
+- `readr`: to open and organize the data.
+
+- `stringr`: for manipulating text objects.
+
+- `forcats`: for manipulation of the class factors.
+
+---
+# Advantages of the Tidyverse ... in a gif
+
+.center[
+
+&lt;img src="https://media.giphy.com/media/elUGwgiPOdq7e/giphy.gif" width=" 60% " /&gt;
+
+]
+
+---
+
+# Advantages of the Tidyverse ... in words.
+
+- `tidyverse` substantially facilitates data analysis tasks when compared to basic R codes.
+
+- It substantially increases how readable your code looks.
+
+- Manipulation, visualization and modeling are integrated in a single philosophy.
+
+- It is widely used in the R community. Therefore, you probably need to learn to read code from other colleagues.
+
+
+---
+class: middle, center
+
+# Introduction to Tidyverse
+
+---
+## Installation
+
+
+```r
+install.packages ("tidyverse")
+```
+
+
+```r
+library (tidyverse)
+```
+
+
+---
+
+## Tibbles.
+
+
+The fundamental object of `tidyverse` are databases.
+
+`Tidyverse` call databases with a new name: "tibbles". In the tidyverse world, tibbles are a updated version of the `dataframe` base class in R. 
+
+Tibbles are exactly the same as `data.frames` in their basic structure. However, tibbles have some adjustments - most of them visual - to make them easier to use.
+
+---
+
+## Creating Tibbles.
+
+--
+.pull-left[
+
+```r
+# Class of mtcars Database
+class (mtcars)
+```
+
+```
+## [1] "data.frame"
+```
+
+```r
+# Convert to tibbles
+mtcars_tib &lt;- as_tibble (mtcars)
+mtcars_tib
+```
+
+```
+## # A tibble: 32 x 11
+##      mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1  21       6  160    110  3.9   2.62  16.5     0     1     4     4
+##  2  21       6  160    110  3.9   2.88  17.0     0     1     4     4
+##  3  22.8     4  108     93  3.85  2.32  18.6     1     1     4     1
+##  4  21.4     6  258    110  3.08  3.22  19.4     1     0     3     1
+##  5  18.7     8  360    175  3.15  3.44  17.0     0     0     3     2
+##  6  18.1     6  225    105  2.76  3.46  20.2     1     0     3     1
+##  7  14.3     8  360    245  3.21  3.57  15.8     0     0     3     4
+##  8  24.4     4  147.    62  3.69  3.19  20       1     0     4     2
+##  9  22.8     4  141.    95  3.92  3.15  22.9     1     0     4     2
+## 10  19.2     6  168.   123  3.92  3.44  18.3     1     0     4     4
+## # … with 22 more rows
+```
+]
+
+--
+
+.pull-right[
+
+```r
+tibble (a = c ("Tiago", "Ventura"),
+       b = c ("first name", "last name"))
+```
+
+```
+## # A tibble: 2 x 2
+##   a       b         
+##   &lt;chr&gt;   &lt;chr&gt;     
+## 1 Tiago   first name
+## 2 Ventura last name
+```
+
+]
+
+--
+
+---
+
+## Pipe.
+
+.pull-left[
+&lt;img src="figs/pipe.jpg" width=" 60% " /&gt;
+]
+
+.pull-right[
+
+The use of `%&gt;%` pipes is a fundamental part of how the functions from the `tidyverse` packages work.
+
+The main advantages of the pipe:
+
+- Concatenate the functions of your code.
+
+- Avoid intermediate objects.
+
+- Make your codes more intuitive.
+
+- Avoids multiple parentheses.
+
+]
+
+
+---
+
+### The base R works from the inside out:
+
+
+```r
+# R
+x &lt;- c(1:10)
+round(exp(sqrt(mean (x))), 1)
+```
+
+```
+## [1] 10.4
+```
+
+### The Pipe
+
+
+```r
+x%&gt;%
+  mean()%&gt;%
+  sqrt()%&gt;%
+  exp()%&gt;%
+  round(1)
+```
+
+```
+## [1] 10.4
+```
+
+---
+
+# Important notes about pipes.
+
+**1. Pipes should always be used to connect functions and their outputs.**
+
+
+```r
+# Do not run this code.
+x%&gt;%
+  function1 (arg1 = x)%&gt;%
+  function2 (arg = output_da_funcao1)
+```
+
+**Example:**
+
+
+```r
+sample (1: 1000, 500, replace = TRUE)%&gt;%
+  density ()%&gt;% # function 1.
+  plot () # function 2.
+```
+
+&lt;img src="intro_tidyverse_ilcss_ar_files/figure-html/unnamed-chunk-10-1.png" width="30%" /&gt;
+
+---
+
+**2. The input from a pipe can always be omitted, or represented by the shortcut `.` **
+
+
+```r
+sample(1:1000, 500, replace = TRUE)%&gt;%
+  density(.)%&gt;% # function 1.
+  plot(.) # function 2.
+```
+
+![](intro_tidyverse_ilcss_ar_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+
+---
+
+**3. The results of the pipe are not saved automatically. You need to assign them to a new object.**
+
+
+```r
+graph &lt;- sample (1: 1000, 500, replace = TRUE)%&gt;%
+              density (.)%&gt;% # function 1.
+              plot (.) # function 2.
+```
+
+![](intro_tidyverse_ilcss_ar_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
+
+
+
+---
+class: middle, center, inverse
+
+# Data manipulation with `dplyr`.
+
+---
+## Brazilian Electoral Data: 
+
+
+```r
+if(!require ("devtools")) install.packages("devtools")
+devtools::install_github("Cepesp-Fgv/cepesp-r")
+```
+
+
+```r
+library(cepespR)
+library(tidyverse)
+pres_rio &lt;- get_votes(year = 2018,
+                         position = "President",
+                         regional_aggregation = "Municipio",
+                         state = "RJ")%&gt;%
+                  as_tibble()
+```
+
+---
+
+## Introduction to Dplyr.
+
+`Dplyr` is one of the most popular packages in R.
+
+The logics structuring the `dplyr` functions is  simple: its functions do exactly what their names describe (**verb based language**). These are the most useful functions: 
+
+.pull-left[
+
+- `select()`: to select columns.
+
+- `filter()`: to filter the database by rows
+
+- `mutate()`: to create new variables and change existing ones.
+
+- `arrange()`: to sort the database.
+
+- `group_by()`: to group and perform analyses within the subgroups.
+
+- `summarize()`: to summarize the data -- as a whole or by subgroups.
+
+]
+
+.pull-right[
+
+All of these functions follow the same characteristics:
+
+- The input is always a database (tibble or dataframe).
+
+- The database is always the first argument.
+
+- The following arguments will access database columns directly, **without quotes.**
+
+- The output is always a new database.
+
+]
+
+---
+
+**Some other less used functions**:
+
+- `count()`:  to count the number of observations by subgroups.
+
+- `distinct()`: to eliminate repetitions.
+
+- `n():` to count how many observations there are in grouped data.
+
+- `sample_n():` to select n samples from your database
+
+- `glimpse():` to provide a summary of your data.
+
+- `top_n():` to select by rows according to the rank of the variables.
+
+- `slice()`: to filter your database by position in the rows.
+
+---
+
+# Select: Select Columns.
+
+
+&lt;img src="figs/select.png" width=" 80% " /&gt;
+
+---
+## Basics 
+
+
+```r
+pres_rio %&gt;% # Data
+* select(ANO_ELEICAO, SIGLA_UE, COD_MUN_IBGE)
+```
+
+```
+## # A tibble: 1,374 x 3
+##    ANO_ELEICAO SIGLA_UE COD_MUN_IBGE
+##          &lt;int&gt; &lt;chr&gt;           &lt;int&gt;
+##  1        2018 BR            3300100
+##  2        2018 BR            3300100
+##  3        2018 BR            3300100
+##  4        2018 BR            3300100
+##  5        2018 BR            3300100
+##  6        2018 BR            3300100
+##  7        2018 BR            3300100
+##  8        2018 BR            3300100
+##  9        2018 BR            3300100
+## 10        2018 BR            3300100
+## # … with 1,364 more rows
+```
+
+---
+
+## Reordering Columns
+
+
+```r
+pres_rio %&gt;% # Data
+  # select columns
+* select(QTDE_VOTOS, ANO_ELEICAO,  SIGLA_UE,
+*        NOME_MUNICIPIO, COD_MUN_IBGE) #
+```
+
+```
+## # A tibble: 1,374 x 5
+##    QTDE_VOTOS ANO_ELEICAO SIGLA_UE NOME_MUNICIPIO COD_MUN_IBGE
+##         &lt;int&gt;       &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;                 &lt;int&gt;
+##  1       8696        2018 BR       Angra dos Reis      3300100
+##  2      13204        2018 BR       Angra dos Reis      3300100
+##  3        565        2018 BR       Angra dos Reis      3300100
+##  4         34        2018 BR       Angra dos Reis      3300100
+##  5      59499        2018 BR       Angra dos Reis      3300100
+##  6        662        2018 BR       Angra dos Reis      3300100
+##  7        349        2018 BR       Angra dos Reis      3300100
+##  8         32        2018 BR       Angra dos Reis      3300100
+##  9        998        2018 BR       Angra dos Reis      3300100
+## 10       1909        2018 BR       Angra dos Reis      3300100
+## # … with 1,364 more rows
+```
+
+---
+
+## Renaming Columns
+
+
+```r
+pres_rio %&gt;%
+  # selects columns with new names.
+* select(votes = QTDE_VOTOS,
+*        year = ANO_ELEICAO,
+*        parents = SIGLA_UE,
+*        mun = NOME_MUNICIPIO,
+         cod = COD_MUN_IBGE) # columns
+```
+
+```
+## # A tibble: 1,374 x 5
+##    votes  year parents mun                cod
+##    &lt;int&gt; &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;            &lt;int&gt;
+##  1  8696  2018 BR      Angra dos Reis 3300100
+##  2 13204  2018 BR      Angra dos Reis 3300100
+##  3   565  2018 BR      Angra dos Reis 3300100
+##  4    34  2018 BR      Angra dos Reis 3300100
+##  5 59499  2018 BR      Angra dos Reis 3300100
+##  6   662  2018 BR      Angra dos Reis 3300100
+##  7   349  2018 BR      Angra dos Reis 3300100
+##  8    32  2018 BR      Angra dos Reis 3300100
+##  9   998  2018 BR      Angra dos Reis 3300100
+## 10  1909  2018 BR      Angra dos Reis 3300100
+## # … with 1,364 more rows
+```
+
+---
+
+## Saving a new dataset.
+
+
+```r
+rio_reduced &lt;- pres_rio %&gt;% # Data
+                 # selects columns with new names.
+*                select(votes = QTDE_VOTOS,
+*                       year = ANO_ELEICAO,
+*                       states = SIGLA_UE,
+*                       mun = NOME_MUNICIPIO,
+                        cod = COD_MUN_IBGE)# columns
+```
+
+---
+
+## Shortcuts for  Select.
+
+- `contains ()` - Extract columns that contain certain text.
+
+- `starts_with ()` - Extract columns that start with a given text.
+
+- `ends_with ()` - Extract columns that end with a given text.
+
+- `everything ()` - Extract all remaining columns.
+
+---
+
+## Examples
+
+
+```r
+pres_rio %&gt;%
+  # select columns where NOME appears
+* select(contains("NOME"))
+```
+
+```
+## # A tibble: 1,374 x 5
+##    NOME_MACRO NOME_UF        NOME_MESO      NOME_MICRO          NOME_MUNICIPIO
+##    &lt;chr&gt;      &lt;chr&gt;          &lt;chr&gt;          &lt;chr&gt;               &lt;chr&gt;         
+##  1 Sudeste    Rio de Janeiro Sul Fluminense Baía da Ilha Grande Angra dos Reis
+##  2 Sudeste    Rio de Janeiro Sul Fluminense Baía da Ilha Grande Angra dos Reis
+##  3 Sudeste    Rio de Janeiro Sul Fluminense Baía da Ilha Grande Angra dos Reis
+##  4 Sudeste    Rio de Janeiro Sul Fluminense Baía da Ilha Grande Angra dos Reis
+##  5 Sudeste    Rio de Janeiro Sul Fluminense Baía da Ilha Grande Angra dos Reis
+##  6 Sudeste    Rio de Janeiro Sul Fluminense Baía da Ilha Grande Angra dos Reis
+##  7 Sudeste    Rio de Janeiro Sul Fluminense Baía da Ilha Grande Angra dos Reis
+##  8 Sudeste    Rio de Janeiro Sul Fluminense Baía da Ilha Grande Angra dos Reis
+##  9 Sudeste    Rio de Janeiro Sul Fluminense Baía da Ilha Grande Angra dos Reis
+## 10 Sudeste    Rio de Janeiro Sul Fluminense Baía da Ilha Grande Angra dos Reis
+## # … with 1,364 more rows
+```
+
+
+
+```r
+pres_rio %&gt;%
+  # select columns ending with UF and
+  # all other remaining columns
+* select(ends_with("UF"), everything())
+```
+
+```
+## # A tibble: 1,374 x 19
+##    UF    NOME_UF ANO_ELEICAO SIGLA_UE NUM_TURNO DESCRICAO_ELEIC… CODIGO_CARGO DESCRICAO_CARGO NUMERO_CANDIDATO
+##    &lt;chr&gt; &lt;chr&gt;         &lt;int&gt; &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;                   &lt;int&gt; &lt;chr&gt;                      &lt;int&gt;
+##  1 RJ    Rio de…        2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE                    12
+##  2 RJ    Rio de…        2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE                    13
+##  3 RJ    Rio de…        2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE                    15
+##  4 RJ    Rio de…        2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE                    16
+##  5 RJ    Rio de…        2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE                    17
+##  6 RJ    Rio de…        2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE                    18
+##  7 RJ    Rio de…        2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE                    19
+##  8 RJ    Rio de…        2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE                    27
+##  9 RJ    Rio de…        2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE                    30
+## 10 RJ    Rio de…        2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE                    45
+## # … with 1,364 more rows, and 10 more variables: CODIGO_MACRO &lt;int&gt;, NOME_MACRO &lt;chr&gt;, CODIGO_MESO &lt;int&gt;,
+## #   NOME_MESO &lt;chr&gt;, CODIGO_MICRO &lt;int&gt;, NOME_MICRO &lt;chr&gt;, COD_MUN_TSE &lt;int&gt;, COD_MUN_IBGE &lt;int&gt;,
+## #   NOME_MUNICIPIO &lt;chr&gt;, QTDE_VOTOS &lt;int&gt;
+```
+
+---
+
+## Filter: Filters Rows by Logical Conditions.
+
+
+      filter (data, column == "a")
+
+
+&lt;img src="figs/filter.png" width="80%" /&gt;
+
+---
+
+## Filter: Basics
+
+
+
+```r
+pres_rio %&gt;%
+  # filter cases where 17 is equal.
+* filter (NUMERO_CANDIDATO == 17)%&gt;%
+  # select
+  select (DESCRICAO_CARGO, NUMERO_CANDIDATO, QTDE_VOTOS, NOME_MUNICIPIO)
+```
+
+```
+## # A tibble: 184 x 4
+##    DESCRICAO_CARGO NUMERO_CANDIDATO QTDE_VOTOS NOME_MUNICIPIO    
+##    &lt;chr&gt;                      &lt;int&gt;      &lt;int&gt; &lt;chr&gt;             
+##  1 PRESIDENTE                    17      59499 Angra dos Reis    
+##  2 PRESIDENTE                    17       4366 Aperibé           
+##  3 PRESIDENTE                    17      44108 Araruama          
+##  4 PRESIDENTE                    17       3816 Areal             
+##  5 PRESIDENTE                    17      13028 Armação dos Búzios
+##  6 PRESIDENTE                    17      13342 Arraial do Cabo   
+##  7 PRESIDENTE                    17      27178 Barra do Piraí    
+##  8 PRESIDENTE                    17      55972 Barra Mansa       
+##  9 PRESIDENTE                    17     138676 Belford Roxo      
+## 10 PRESIDENTE                    17       8077 Bom Jardim        
+## # … with 174 more rows
+```
+
+---
+
+## Filter: Multiple Conditions
+
+
+```r
+pres_rio %&gt;%
+  # filter using or
+* filter(NUMERO_CANDIDATO == 17 | NUMERO_CANDIDATO == 13, # or
+  #filter using and
+*        NOME_MUNICIPIO == "Rio de Janeiro")%&gt;% # and
+  #select
+  select(DESCRICAO_CARGO, NUMERO_CANDIDATO, QTDE_VOTOS, NOME_MUNICIPIO)
+```
+
+```
+## # A tibble: 4 x 4
+##   DESCRICAO_CARGO NUMERO_CANDIDATO QTDE_VOTOS NOME_MUNICIPIO
+##   &lt;chr&gt;                      &lt;int&gt;      &lt;int&gt; &lt;chr&gt;         
+## 1 PRESIDENTE                    13     398033 Rio de Janeiro
+## 2 PRESIDENTE                    17    1930657 Rio de Janeiro
+## 3 PRESIDENTE                    13    1105393 Rio de Janeiro
+## 4 PRESIDENTE                    17    2179896 Rio de Janeiro
+```
+
+---
+
+## Arrange: Sort rows by columns.
+
+    arrange (date, column)
+
+&lt;img src="figs/arrange.png" width="80%" /&gt;
+
+---
+
+## Arrange: Basics.
+  
+
+```r
+pres_rio %&gt;%
+  # filter by lines
+  filter(NUMERO_CANDIDATO == 13)%&gt;%
+  # select
+  select(DESCRICAO_CARGO, NUMERO_CANDIDATO,
+         QTDE_VOTOS, NOME_MUNICIPIO)%&gt;%
+  # sort in ascending order
+* arrange(QTDE_VOTOS)
+```
+
+```
+## # A tibble: 184 x 4
+##    DESCRICAO_CARGO NUMERO_CANDIDATO QTDE_VOTOS NOME_MUNICIPIO               
+##    &lt;chr&gt;                      &lt;int&gt;      &lt;int&gt; &lt;chr&gt;                        
+##  1 PRESIDENTE                    13        830 São José do Vale do Rio Preto
+##  2 PRESIDENTE                    13       1111 Areal                        
+##  3 PRESIDENTE                    13       1115 Santa Maria Madalena         
+##  4 PRESIDENTE                    13       1129 Aperibé                      
+##  5 PRESIDENTE                    13       1152 São José de Ubá              
+##  6 PRESIDENTE                    13       1224 Macuco                       
+##  7 PRESIDENTE                    13       1241 Varre-Sai                    
+##  8 PRESIDENTE                    13       1342 Italva                       
+##  9 PRESIDENTE                    13       1448 São Sebastião do Alto        
+## 10 PRESIDENTE                    13       1455 Duas Barras                  
+## # … with 174 more rows
+```
+
+---
+
+## Arrange: Descending
+
+
+
+```r
+pres_rio %&gt;%
+  # filter by lines
+  filter(NUMERO_CANDIDATO == 13)%&gt;%
+  # select
+  select(DESCRICAO_CARGO, NUMERO_CANDIDATO,
+         QTDE_VOTOS, NOME_MUNICIPIO)%&gt;%
+  # sort in descending order
+  arrange(desc(QTDE_VOTOS)) # &lt;&lt;
+```
+
+```
+## # A tibble: 184 x 4
+##    DESCRICAO_CARGO NUMERO_CANDIDATO QTDE_VOTOS NOME_MUNICIPIO       
+##    &lt;chr&gt;                      &lt;int&gt;      &lt;int&gt; &lt;chr&gt;                
+##  1 PRESIDENTE                    13    1105393 Rio de Janeiro       
+##  2 PRESIDENTE                    13     398033 Rio de Janeiro       
+##  3 PRESIDENTE                    13     149075 São Gonçalo          
+##  4 PRESIDENTE                    13     136240 Duque de Caxias      
+##  5 PRESIDENTE                    13     110820 Nova Iguaçu          
+##  6 PRESIDENTE                    13     105606 Niterói              
+##  7 PRESIDENTE                    13      80858 São Gonçalo          
+##  8 PRESIDENTE                    13      79838 Campos dos Goytacazes
+##  9 PRESIDENTE                    13      77504 Duque de Caxias      
+## 10 PRESIDENTE                    13      70499 São João de Meriti   
+## # … with 174 more rows
+```
+
+---
+
+## Mutate: Adds a new column.
+
+    mutate (date, new_column_name = new_column_values)
+
+&lt;img src="figs/mutate.png" width=" 80% " /&gt;
+
+---
+
+### Mutate: Basics
+
+
+```r
+pres_rio %&gt;%
+  # create variable with state and city
+* mutate(city_state = paste(NOME_MUNICIPIO, "-", NOME_UF)) %&gt;%
+  #selects to view
+  select (NOME_MUNICIPIO, NOME_UF, city_state)
+```
+
+```
+## # A tibble: 1,374 x 3
+##    NOME_MUNICIPIO NOME_UF        city_state                     
+##    &lt;chr&gt;          &lt;chr&gt;          &lt;chr&gt;                          
+##  1 Angra dos Reis Rio de Janeiro Angra dos Reis - Rio de Janeiro
+##  2 Angra dos Reis Rio de Janeiro Angra dos Reis - Rio de Janeiro
+##  3 Angra dos Reis Rio de Janeiro Angra dos Reis - Rio de Janeiro
+##  4 Angra dos Reis Rio de Janeiro Angra dos Reis - Rio de Janeiro
+##  5 Angra dos Reis Rio de Janeiro Angra dos Reis - Rio de Janeiro
+##  6 Angra dos Reis Rio de Janeiro Angra dos Reis - Rio de Janeiro
+##  7 Angra dos Reis Rio de Janeiro Angra dos Reis - Rio de Janeiro
+##  8 Angra dos Reis Rio de Janeiro Angra dos Reis - Rio de Janeiro
+##  9 Angra dos Reis Rio de Janeiro Angra dos Reis - Rio de Janeiro
+## 10 Angra dos Reis Rio de Janeiro Angra dos Reis - Rio de Janeiro
+## # … with 1,364 more rows
+```
+
+---
+
+### Mutate: Conditionals
+
+
+```r
+pres_rio %&gt;%
+  # create variable using conditionals
+* mutate(state_sigla = ifelse(NOME_UF == "Rio de Janeiro", "RJ", NA),
+  # concatenate new variable with city
+*        state_city = paste(state_sigla, "-", NOME_MUNICIPIO))  %&gt;%
+  #select
+  select(NOME_UF, NOME_MUNICIPIO, state_sigla, everything())
+```
+
+```
+## # A tibble: 1,374 x 21
+##    NOME_UF NOME_MUNICIPIO state_sigla ANO_ELEICAO SIGLA_UE NUM_TURNO DESCRICAO_ELEIC… CODIGO_CARGO DESCRICAO_CARGO
+##    &lt;chr&gt;   &lt;chr&gt;          &lt;chr&gt;             &lt;int&gt; &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;                   &lt;int&gt; &lt;chr&gt;          
+##  1 Rio de… Angra dos Reis RJ                 2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE     
+##  2 Rio de… Angra dos Reis RJ                 2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE     
+##  3 Rio de… Angra dos Reis RJ                 2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE     
+##  4 Rio de… Angra dos Reis RJ                 2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE     
+##  5 Rio de… Angra dos Reis RJ                 2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE     
+##  6 Rio de… Angra dos Reis RJ                 2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE     
+##  7 Rio de… Angra dos Reis RJ                 2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE     
+##  8 Rio de… Angra dos Reis RJ                 2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE     
+##  9 Rio de… Angra dos Reis RJ                 2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE     
+## 10 Rio de… Angra dos Reis RJ                 2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE     
+## # … with 1,364 more rows, and 12 more variables: NUMERO_CANDIDATO &lt;int&gt;, CODIGO_MACRO &lt;int&gt;, NOME_MACRO &lt;chr&gt;,
+## #   UF &lt;chr&gt;, CODIGO_MESO &lt;int&gt;, NOME_MESO &lt;chr&gt;, CODIGO_MICRO &lt;int&gt;, NOME_MICRO &lt;chr&gt;, COD_MUN_TSE &lt;int&gt;,
+## #   COD_MUN_IBGE &lt;int&gt;, QTDE_VOTOS &lt;int&gt;, state_city &lt;chr&gt;
+```
+
+---
+
+### Mutate: Mathematical Operations.
+
+
+```r
+pres_rio %&gt;%
+  # log of votes
+* mutate(log_votos = log(QTDE_VOTOS)) %&gt;%
+  # select
+* select(QTDE_VOTOS, log_votos)
+```
+
+```
+## # A tibble: 1,374 x 2
+##    QTDE_VOTOS log_votos
+##         &lt;int&gt;     &lt;dbl&gt;
+##  1       8696      9.07
+##  2      13204      9.49
+##  3        565      6.34
+##  4         34      3.53
+##  5      59499     11.0 
+##  6        662      6.50
+##  7        349      5.86
+##  8         32      3.47
+##  9        998      6.91
+## 10       1909      7.55
+## # … with 1,364 more rows
+```
+
+---
+
+
+## Group_by + Summarize. 
+
+&lt;img src="figs/group_by.png" width="60%" /&gt;
+
+---
+
+### Group_by
+
+The `group_by` function works splitting -- under the hood -- your database according unique subgroups of a particular variable.  
+
+Let's see an example:
+
+
+```r
+pres_rio %&gt;%
+  # grouping by the number of the candidates
+  group_by(NUMERO_CANDIDATO) 
+```
+
+```
+## # A tibble: 1,374 x 19
+## # Groups:   NUMERO_CANDIDATO [13]
+##    ANO_ELEICAO SIGLA_UE NUM_TURNO DESCRICAO_ELEIC… CODIGO_CARGO DESCRICAO_CARGO NUMERO_CANDIDATO CODIGO_MACRO
+##          &lt;int&gt; &lt;chr&gt;        &lt;int&gt; &lt;chr&gt;                   &lt;int&gt; &lt;chr&gt;                      &lt;int&gt;        &lt;int&gt;
+##  1        2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE                    12            3
+##  2        2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE                    13            3
+##  3        2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE                    15            3
+##  4        2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE                    16            3
+##  5        2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE                    17            3
+##  6        2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE                    18            3
+##  7        2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE                    19            3
+##  8        2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE                    27            3
+##  9        2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE                    30            3
+## 10        2018 BR               1 ELEIÇÃO GERAL F…            1 PRESIDENTE                    45            3
+## # … with 1,364 more rows, and 11 more variables: NOME_MACRO &lt;chr&gt;, UF &lt;chr&gt;, NOME_UF &lt;chr&gt;, CODIGO_MESO &lt;int&gt;,
+## #   NOME_MESO &lt;chr&gt;, CODIGO_MICRO &lt;int&gt;, NOME_MICRO &lt;chr&gt;, COD_MUN_TSE &lt;int&gt;, COD_MUN_IBGE &lt;int&gt;,
+## #   NOME_MUNICIPIO &lt;chr&gt;, QTDE_VOTOS &lt;int&gt;
+```
+
+
+---
+
+## Summarize.
+
+The `summarize` creates a new data frame based on the summaries you asked the function to perform. 
+
+When used together with `group_by`, it allows you to easily gather information for subgroups of your dataset. 
+
+
+&lt;img src="figs/summarize.png" width="50%" /&gt;
+
+---
+
+## Summarize: Basics.
+
+
+
+```r
+pres_rio %&gt;%
+  # first round
+  filter(NUM_TURNO==1) %&gt;%
+  # group
+  group_by(NUMERO_CANDIDATO) %&gt;%
+  # Summing the number of votes
+  summarise(voto_estado=sum(QTDE_VOTOS)) %&gt;%
+  # arranging
+  arrange(desc(voto_estado))
+```
+
+```
+## # A tibble: 13 x 2
+##    NUMERO_CANDIDATO voto_estado
+##               &lt;int&gt;       &lt;int&gt;
+##  1               17     5107735
+##  2               12     1300292
+##  3               13     1255425
+##  4               51      211444
+##  5               45      208325
+##  6               30      139208
+##  7               18      130794
+##  8               15       77333
+##  9               50       57846
+## 10               19       41544
+## 11               16        6005
+## 12               27        4636
+## 13               54        2806
+```
+
+---
+
+class:center, middle, alert
+
+### The summarize goes from multiple to  way fewer rows. 
+
+---
+
+### More Exaples
+
+**Who won the election in the run-off?**
+
+
+```r
+pres_rio %&gt;%
+  
+  filter(NUM_TURNO==2) %&gt;%
+
+  group_by(NUMERO_CANDIDATO) %&gt;%
+  
+  summarise(voto_estado=sum(QTDE_VOTOS)) %&gt;%
+
+    arrange(desc(voto_estado))
+```
+
+```
+## # A tibble: 2 x 2
+##   NUMERO_CANDIDATO voto_estado
+##              &lt;int&gt;       &lt;int&gt;
+## 1               17     5669059
+## 2               13     2673386
+```
+---
+
+**Total Number of Votes per Municipality**
+
+
+```r
+pres_rio %&gt;%
+
+  filter(NUM_TURNO==1) %&gt;%
+  
+  group_by(NOME_MUNICIPIO) %&gt;%
+
+  summarise(voto_mun=sum(QTDE_VOTOS)) 
+```
+
+```
+## # A tibble: 92 x 2
+##    NOME_MUNICIPIO     voto_mun
+##  * &lt;chr&gt;                 &lt;int&gt;
+##  1 Angra dos Reis        88316
+##  2 Aperibé                6680
+##  3 Araruama              64481
+##  4 Areal                  6921
+##  5 Armação dos Búzios    19979
+##  6 Arraial do Cabo       20133
+##  7 Barra do Piraí        48942
+##  8 Barra Mansa           96980
+##  9 Belford Roxo         226785
+## 10 Bom Jardim            14090
+## # … with 82 more rows
+```
+
+---
+
+**Voters in the Districts**
+
+
+```r
+pres_rio %&gt;%
+
+  filter(NUM_TURNO==1) %&gt;%
+  
+  group_by(NUMERO_CANDIDATO, NOME_MESO) %&gt;%
+  
+  summarise(voto_media=mean(QTDE_VOTOS), 
+            voto_min=min(QTDE_VOTOS), 
+            voto_max=max(QTDE_VOTOS))
+```
+
+```
+## # A tibble: 78 x 5
+## # Groups:   NUMERO_CANDIDATO [13]
+##    NUMERO_CANDIDATO NOME_MESO                       voto_media voto_min voto_max
+##               &lt;int&gt; &lt;chr&gt;                                &lt;dbl&gt;    &lt;int&gt;    &lt;int&gt;
+##  1               12 Baixadas                             4769.     1157    13478
+##  2               12 Centro Fluminense                    2558       403    16254
+##  3               12 Metropolitana do Rio de Janeiro     35187.      702   645674
+##  4               12 Noroeste Fluminense                  1393.      296     4684
+##  5               12 Norte Fluminense                     6909.      798    33042
+##  6               12 Sul Fluminense                       5412.      812    23860
+##  7               13 Baixadas                             4409.     1574    10310
+##  8               13 Centro Fluminense                    2954.     1111    10664
+##  9               13 Metropolitana do Rio de Janeiro     31261.      830   398033
+## 10               13 Noroeste Fluminense                  2789.     1129     8209
+## # … with 68 more rows
+```
+
+---
+
+### Mutate x Summarize. 
+
+.pull-left[
+
+```r
+pres_rio %&gt;%
+
+  filter(NUM_TURNO==1) %&gt;%
+  
+  group_by(NUMERO_CANDIDATO) %&gt;%
+  
+  mutate(voto_estado=sum(QTDE_VOTOS)) %&gt;%
+  
+  select(NUMERO_CANDIDATO, voto_estado) %&gt;%
+  
+
+  ungroup() 
+```
+
+```
+## # A tibble: 1,190 x 2
+##    NUMERO_CANDIDATO voto_estado
+##               &lt;int&gt;       &lt;int&gt;
+##  1               12     1300292
+##  2               13     1255425
+##  3               15       77333
+##  4               16        6005
+##  5               17     5107735
+##  6               18      130794
+##  7               19       41544
+##  8               27        4636
+##  9               30      139208
+## 10               45      208325
+## # … with 1,180 more rows
+```
+]
+
+.pull-right[
+
+```r
+pres_rio %&gt;%
+
+  filter(NUM_TURNO==1) %&gt;%
+  
+  group_by(NUMERO_CANDIDATO) %&gt;%
+  
+  summarize(voto_estado=sum(QTDE_VOTOS)) %&gt;%
+  
+  slice(1:5) 
+```
+
+```
+## # A tibble: 5 x 2
+##   NUMERO_CANDIDATO voto_estado
+##              &lt;int&gt;       &lt;int&gt;
+## 1               12     1300292
+## 2               13     1255425
+## 3               15       77333
+## 4               16        6005
+## 5               17     5107735
+```
+]
+
+---
+
+## Joins
+
+Connecting our dataset with information from other sources is crucial in any applied project. Mastering this skill  is fundamental for your training!
+
+`dplyr` has a set of functions to merge dataframes. These functions are all inspired by another language called **SQL**.
+
+When connecting two datasets, we called **keys** the name of the variables used in the merging. These variables must always be unique (one per row) and complete (no missing). 
+
+
+---
+
+Let's create two datasets to practice with some `joins` functions. 
+
+
+```r
+data1 &lt;- tibble(nome=c("A", "B", "C"), 
+                value=c(10, 20, 30)) 
+data2 &lt;- tibble(nome=c("A", "D", "C"), 
+                value2=c(10, 50, 30))
+data1
+```
+
+```
+## # A tibble: 3 x 2
+##   nome  value
+##   &lt;chr&gt; &lt;dbl&gt;
+## 1 A        10
+## 2 B        20
+## 3 C        30
+```
+
+```r
+data2
+```
+
+```
+## # A tibble: 3 x 2
+##   nome  value2
+##   &lt;chr&gt;  &lt;dbl&gt;
+## 1 A         10
+## 2 D         50
+## 3 C         30
+```
+
+---
+
+
+### left_join()
+
+.pull-left[
+&lt;img src="figs/left-join.gif" width="80%" /&gt;
+]
+
+.pull-right[
+
+
+```r
+left_join(data1, data2)
+```
+
+```
+## # A tibble: 3 x 3
+##   nome  value value2
+##   &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 A        10     10
+## 2 B        20     NA
+## 3 C        30     30
+```
+
+]
+---
+
+### inner_join()
+
+.pull-left[
+&lt;img src="figs/inner-join.gif" width="80%" /&gt;
+]
+
+.pull-right[
+
+```r
+inner_join(data1, data2)
+```
+
+```
+## # A tibble: 2 x 3
+##   nome  value value2
+##   &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 A        10     10
+## 2 C        30     30
+```
+]
+
+---
+
+## full_join()
+
+.pull-left[
+&lt;img src="figs/full-join.gif" width="80%" /&gt;
+]
+
+.pull-right[
+
+```r
+full_join(data1, data2)
+```
+
+```
+## # A tibble: 4 x 3
+##   nome  value value2
+##   &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 A        10     10
+## 2 B        20     NA
+## 3 C        30     30
+## 4 D        NA     50
+```
+]
+
+---
+
+### Distinct Keys?
+
+
+```r
+data3 &lt;- data2 %&gt;%
+          # alterando o nome
+          select(chave=nome, everything())
+
+# Join
+
+left_join(data1, data3, 
+          by=c("nome"="chave")) # adicione argumento by.
+```
+
+```
+## # A tibble: 3 x 3
+##   nome  value value2
+##   &lt;chr&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 A        10     10
+## 2 B        20     NA
+## 3 C        30     30
+```
+
+---
+class: middle, center, inverse
+
+## What is next?
+
+---
+
+## Some Suggestions:
+
+- Scoped Verbs in Dplyr. See Rebecca Barter [Tutorial](http://www.rebeccabarter.com/blog/2019-01-23_scoped-verbs/)
+
+- [Tidy Data](https://r4ds.had.co.nz/tidy-data.html)
+
+- [stringr](https://r4ds.had.co.nz/strings.html) and [forcats](https://r4ds.had.co.nz/factors.html) to work with characters and factors
+
+- and practice... practice.. practice...
+
+
+---
+
+class: middle, center, inverse
+
+### See you again for the data visualization class!
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

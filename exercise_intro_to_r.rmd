@@ -72,6 +72,8 @@ $$
 
 ```{r}
 #answer
+https://github.com/TiagoVentura/ilcss_ar_workshop/blob/main/exercise_intro_to_r.rmd
+https://github.com/TiagoVentura/ilcss_ar_workshop/blob/main/exercise_intro_r.rmd
 ```
 
 ## See you next week!
