@@ -4,7 +4,7 @@ This repository contains the materials for **Introduction to R** workshop I offe
 
 ## Schedule
 
-- Workshop I: Introduction to R and Crash Course in Base R. ([Slides](https://tiagoventura.github.io/ilcss_ar_workshop/slides/intro_r_ilcss_ar#1) / [R Code](code_intro_r.r) / [Exercise](exercise_intro_r.rmd))
+- Workshop I: Introduction to R and Crash Course in Base R. ([Slides](https://tiagoventura.github.io/ilcss_ar_workshop/slides/intro_r_ilcss_ar#1) / [R Code](code_intro_r.r) / [Exercise](exercise_intro_to_r.rmd))
 
 - Introduction to Data Manipulation with dplyr. ([Slides]() / [R Code]() / [Exercise]())
 
