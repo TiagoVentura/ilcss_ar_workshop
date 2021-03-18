@@ -4,9 +4,9 @@ This repository contains the materials for **Introduction to R** workshop I offe
 
 ## Schedule
 
-- Workshop I: Introduction to R and Crash Course in Base R. ([Slides](https://tiagoventura.github.io/ilcss_ar_workshop/slides/intro_r_ilcss_ar#1) / [R Code](./code/intro_r_ilcss_ar.r) / [Exercise](exercise_intro_to_r.rmd))
+- Workshop I: Introduction to R and Crash Course in Base R. ([Slides](https://tiagoventura.github.io/ilcss_ar_workshop/slides/intro_r_ilcss_ar#1) / [R Code](./code/intro_r_ilcss_ar.R) / [Exercise](exercise_intro_to_r.rmd))
 
-- Introduction to Data Manipulation with dplyr. ([Slides](https://tiagoventura.github.io/ilcss_ar_workshop/slides/intro_tidyverse_ilcss_ar.Rmd) / [R Code](./code/intro_r_ilcss_ar.r) / [Exercise]())
+- Introduction to Data Manipulation with dplyr. ([Slides](https://tiagoventura.github.io/ilcss_ar_workshop/slides/intro_tidyverse_ilcss_ar.Rmd) / [R Code](./code/intro_r_ilcss_ar.R) / [Exercise]())
 
 
 ## Materials
@@ -43,6 +43,3 @@ There are a hell lot of materials out there and for free that you can use to dig
 ### [POIR 613 Computational Social Science](http://pablobarbera.com/POIR613/index.html) University of Southern California, por Pablo Barberá.
 
 ### [Introduction to Data Science PPOL670](http://ericdunford.com/ppol670/) Georgetown University, por Eric Dunford
-
-
-
