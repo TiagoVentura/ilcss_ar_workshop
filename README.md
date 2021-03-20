@@ -19,7 +19,7 @@ I am a Ph.D. Candidate in Government and Politics at the University of Maryland.
 
 You can find more about my research on my [website](http://tiagoventura.rbind.io/)
 
-During the years of my Ph.D. at Maryland, I had the amazing opportunity to work as a researcher at the iLCSS Maryland under the supervision of Ernesto Calvo. This experience was fundamental for my learning process during the PhD, but also fundamentallu shaped of my research agenda in political communication. The iLCSS also gave me the opportunity to have Ernesto as my mentor and co-author on several projects, and for this it is a honor to be here with you today!
+During the years of my Ph.D. at Maryland, I had the amazing opportunity to work as a researcher at the iLCSS Maryland under the supervision of Ernesto Calvo. This experience was fundamental for my learning process of my PhD, but also fundamentally shaped my research agenda in political communication. The iLCSS also gave me the opportunity to have Ernesto as my mentor and co-author on several projects, and for this it is a honor to be here with you today!
 
 ## References
 
