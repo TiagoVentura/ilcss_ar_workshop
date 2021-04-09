@@ -253,34 +253,27 @@ knitr::include_graphics("figs/ajuda.png")
 
 
 ---
-class: center, middle 
-
-## The 15 minutes rule.
-
-From  [Rochele Terman plsc-31101](https://plsc-31101.github.io/course/introduction.html).
-
-```{r echo=FALSE, out.width = "50%"}
-library(tweetrmd)
-library(webshot)
-tweetrmd::tweet_screenshot(tweet_url("math_rachel", "764931533383749632"))
-
-```
-
----
 class: center, middle, inverse
 
 # Objects in R
 
 ---
 
-# O que são objetos ?
+# Objects: Definition?
 
-In simple terms, an `object` is a bit of text that represents a specific value. Variable names can only contain letters, numbers, the underscore character, and (unlike Python) the period character.
+In simple terms, an `object` is a bit of text that represents a specific value. 
 
-`Everything that exists in R is an object.`
+Objects names can only contain letters, numbers, the underscore character, and (unlike Python) the period character.
+
+Assigning values to new objects is how you create things in R. 
+
+<br><br>
+
+### `Everything that exists in R is an object.`
 
 
-It is how you create things in R. 
+<br><br>
+
 
 ---
 
@@ -485,10 +478,10 @@ lista_1 <- list(X, as.matrix(X), as.character(X))
 
 # Visualize a lista.
 
-str(list)
+str(lista_1)
 
 # Acessing a value: double [[]]
-list_1[[1]]
+lista_1[[1]]
 
 ```
 
@@ -528,8 +521,7 @@ data
 ## Pre-Built Data Frames
 
 ```{r}
-#devtools::install_github("apreshill/bakeoff")
-mtcars
+mtcars # already loaded in your R environment
 
 ```
 
@@ -584,15 +576,15 @@ bakers[1:5, ]
 
 ```{r eval=FALSE }
 
-head(bakers) # First lines
+head(mtcars) # First lines
 
-tail(bakers) # last lines linhas
+tail(mtcars) # last lines linhas
 
-summary(bakers) # classes
+summary(mtcars) # classes
 
-dim(bakes) # dimensions
+dim(mtcars) # dimensions
 
-glimpse(bakers) # summary
+glimpse(mtcars) # summary
 
 ```
 

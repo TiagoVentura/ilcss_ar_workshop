@@ -269,29 +269,27 @@ help(mean)
 
 
 ---
-class: center, middle 
-
-## The 15 minutes rule.
-
-From  [Rochele Terman plsc-31101](https://plsc-31101.github.io/course/introduction.html).
-
-&lt;img src="intro_r_ilcss_ar_files/figure-html/unnamed-chunk-13-1.png" width="50%" /&gt;
-
----
 class: center, middle, inverse
 
 # Objects in R
 
 ---
 
-# O que são objetos ?
+# Objects: Definition?
 
-In simple terms, an `object` is a bit of text that represents a specific value. Variable names can only contain letters, numbers, the underscore character, and (unlike Python) the period character.
+In simple terms, an `object` is a bit of text that represents a specific value. 
 
-`Everything that exists in R is an object.`
+Objects names can only contain letters, numbers, the underscore character, and (unlike Python) the period character.
+
+Assigning values to new objects is how you create things in R. 
+
+&lt;br&gt;&lt;br&gt;
+
+### `Everything that exists in R is an object.`
 
 
-It is how you create things in R. 
+&lt;br&gt;&lt;br&gt;
+
 
 ---
 
@@ -345,12 +343,7 @@ ls()
 ```
 
 ```
-##  [1] "bakers"              "char_1_5"            "cities"              "container"           "dados"              
-##  [6] "data"                "dfake"               "i"                   "lista_1"             "m"                  
-## [11] "meu_numero_da_sorte" "nome"                "num_1_5"             "places_with_ilcss"   "ratings_seasons"    
-## [16] "some_me"             "temp"                "temporada_1"         "temporada_2"         "temporada_3"        
-## [21] "temporadas"          "x"                   "X"                   "x_list"              "x_matrix"           
-## [26] "y"
+## [1] "nome" "x"    "y"
 ```
 
 #### Remove Objects
@@ -621,20 +614,23 @@ lista_1 &lt;- list(X, as.matrix(X), as.character(X))
 
 # Visualize a lista.
 
-str(list)
+str(lista_1)
 ```
 
 ```
-## function (...)
+## List of 3
+##  $ : num [1:10] 1 2.3 4 5 6.78 6 7 8 9 10
+##  $ : num [1:10, 1] 1 2.3 4 5 6.78 6 7 8 9 10
+##  $ : chr [1:10] "1" "2.3" "4" "5" ...
 ```
 
 ```r
 # Acessing a value: double [[]]
-list_1[[1]]
+lista_1[[1]]
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'list_1' not found
+##  [1]  1.00  2.30  4.00  5.00  6.78  6.00  7.00  8.00  9.00 10.00
 ```
 
 ---
@@ -696,8 +692,7 @@ data
 
 
 ```r
-#devtools::install_github("apreshill/bakeoff")
-mtcars
+mtcars # already loaded in your R environment
 ```
 
 ```
@@ -785,8 +780,7 @@ bakers[,"mpg"]
 ```
 
 ```
-## Error: Can't subset columns that don't exist.
-## x Column `mpg` doesn't exist.
+## Error in eval(expr, envir, enclos): object 'bakers' not found
 ```
 
 ---
@@ -799,14 +793,7 @@ bakers[1:5, ]
 ```
 
 ```
-## # A tibble: 5 x 8
-##   series baker_full              baker       age occupation                      hometown     baker_last baker_first
-##   &lt;fct&gt;  &lt;chr&gt;                   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;                           &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;      
-## 1 1      "Annetha Mills"         Annetha      30 Midwife                         Essex        Mills      Annetha    
-## 2 1      "David Chambers"        David        31 Entrepreneur                    Milton Keyn… Chambers   David      
-## 3 1      "Edward \"Edd\" Kimber" Edd          24 Debt collector for Yorkshire B… Bradford     Kimber     Edward     
-## 4 1      "Jasminder Randhawa"    Jasminder    45 Assistant Credit Control Manag… Birmingham   Randhawa   Jasminder  
-## 5 1      "Jonathan Shepherd"     Jonathan     25 Research Analyst                St Albans    Shepherd   Jonathan
+## Error in eval(expr, envir, enclos): object 'bakers' not found
 ```
 
 
@@ -817,15 +804,15 @@ bakers[1:5, ]
 
 
 ```r
-head(bakers) # First lines
+head(mtcars) # First lines
 
-tail(bakers) # last lines linhas
+tail(mtcars) # last lines linhas
 
-summary(bakers) # classes
+summary(mtcars) # classes
 
-dim(bakes) # dimensions
+dim(mtcars) # dimensions
 
-glimpse(bakers) # summary
+glimpse(mtcars) # summary
 ```
 
 
@@ -916,8 +903,10 @@ list.files()
 ```
 
 ```
-## [1] "dfake.csv"              "figs"                   "intro_r_ilcss_ar_files" "intro_r_ilcss_ar.html" 
-## [5] "intro_r_ilcss_ar.Rmd"   "libs"                   "styles.css"
+##  [1] "dfake.csv"                      "figs"                           "fontsrladies.css"              
+##  [4] "intro_r_ilcss_ar_files"         "intro_r_ilcss_ar.html"          "intro_r_ilcss_ar.Rmd"          
+##  [7] "intro_tidyverse_ilcss_ar_cache" "intro_tidyverse_ilcss_ar_files" "intro_tidyverse_ilcss_ar.html" 
+## [10] "intro_tidyverse_ilcss_ar.Rmd"   "libs"                           "styles.css"
 ```
 
 ```r

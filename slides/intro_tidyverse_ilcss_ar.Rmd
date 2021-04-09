@@ -52,9 +52,9 @@ For all these tasks, we will use the packages from `tidyverse`
 
 # Tidyverse
 
-`Tidyverse` is a family of R packages developed in an integrated way. These packages share the same underlying design philosophy, grammar and data structures.
+`Tidyverse` is a family of R packages. These packages share the same underlying design, philosophy, grammar and data structures.
 
-The purpose of `tidyverse` is to provide an integrated set of tools for using R as a language in Data Science. These are the main packages of `tidyverse`:
+The purpose of `tidyverse` is to provide an integrated set of tools for using R as a language in data science. These are the main packages of `tidyverse`:
 
 - `dplyr`: for data manipulation.
 

@@ -64,13 +64,6 @@ plot("hello")
 knitr::include_graphics("figs/ajuda.png") 
 
 
-## ----echo=FALSE, out.width = "50%"--------------------------------------------------------------------------------
-library(tweetrmd)
-library(webshot)
-tweetrmd::tweet_screenshot(tweet_url("math_rachel", "764931533383749632"))
-
-
-
 ## -----------------------------------------------------------------------------------------------------------------
 # Numeric Objects
 x <- 5
@@ -192,10 +185,10 @@ lista_1 <- list(X, as.matrix(X), as.character(X))
 
 # Visualize a lista.
 
-str(list)
+str(lista_1)
 
 # Acessing a value: double [[]]
-list_1[[1]]
+lista_1[[1]]
 
 
 
@@ -213,8 +206,7 @@ data
 
 
 ## -----------------------------------------------------------------------------------------------------------------
-#devtools::install_github("apreshill/bakeoff")
-mtcars
+mtcars # already loaded in your R environment
 
 
 
@@ -237,15 +229,15 @@ bakers[1:5, ]
 
 ## ----eval=FALSE---------------------------------------------------------------------------------------------------
 ## 
-## head(bakers) # First lines
+## head(mtcars) # First lines
 ## 
-## tail(bakers) # last lines linhas
+## tail(mtcars) # last lines linhas
 ## 
-## summary(bakers) # classes
+## summary(mtcars) # classes
 ## 
-## dim(bakes) # dimensions
+## dim(mtcars) # dimensions
 ## 
-## glimpse(bakers) # summary
+## glimpse(mtcars) # summary
 ## 
 
 
