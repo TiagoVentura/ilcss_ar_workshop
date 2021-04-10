@@ -109,7 +109,7 @@ install.packages ("tidyverse")
 ```
 
 ```{r}
-library (tidyverse)
+library(tidyverse)
 ```
 
 
@@ -274,7 +274,7 @@ pres_rio <- get_votes(year = 2018,
 
 `Dplyr` is one of the most popular packages in R.
 
-The logics structuring the `dplyr` functions is  simple: its functions do exactly what their names describe (**verb based language**). These are the most useful functions: 
+The idea behind the `dplyr` functions is  simple: its functions do exactly what their names describe (**verb based language**). These are the most useful functions: 
 
 .pull-left[
 
@@ -294,7 +294,7 @@ The logics structuring the `dplyr` functions is  simple: its functions do exactl
 
 .pull-right[
 
-All of these functions follow the same characteristics:
+All of these functions follow the same structure:
 
 - The input is always a database (tibble or dataframe).
 

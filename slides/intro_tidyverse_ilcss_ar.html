@@ -109,7 +109,7 @@ install.packages ("tidyverse")
 
 
 ```r
-library (tidyverse)
+library(tidyverse)
 ```
 
 
@@ -263,7 +263,7 @@ sample (1: 1000, 500, replace = TRUE)%&gt;%
   plot () # function 2.
 ```
 
-&lt;img src="intro_tidyverse_ilcss_ar_files/figure-html/unnamed-chunk-10-1.png" width="30%" /&gt;
+&lt;img src="intro_tidyverse_ilcss_ar_files/figure-html/unnamed-chunk-17-1.png" width="30%" /&gt;
 
 ---
 
@@ -276,7 +276,7 @@ sample(1:1000, 500, replace = TRUE)%&gt;%
   plot(.) # function 2.
 ```
 
-![](intro_tidyverse_ilcss_ar_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+![](intro_tidyverse_ilcss_ar_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -289,7 +289,7 @@ graph &lt;- sample (1: 1000, 500, replace = TRUE)%&gt;%
               plot (.) # function 2.
 ```
 
-![](intro_tidyverse_ilcss_ar_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
+![](intro_tidyverse_ilcss_ar_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
 
 
 
@@ -324,7 +324,7 @@ pres_rio &lt;- get_votes(year = 2018,
 
 `Dplyr` is one of the most popular packages in R.
 
-The logics structuring the `dplyr` functions is  simple: its functions do exactly what their names describe (**verb based language**). These are the most useful functions: 
+The idea behind the `dplyr` functions is  simple: its functions do exactly what their names describe (**verb based language**). These are the most useful functions: 
 
 .pull-left[
 
@@ -344,7 +344,7 @@ The logics structuring the `dplyr` functions is  simple: its functions do exactl
 
 .pull-right[
 
-All of these functions follow the same characteristics:
+All of these functions follow the same structure:
 
 - The input is always a database (tibble or dataframe).
 
